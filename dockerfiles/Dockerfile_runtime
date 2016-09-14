@@ -1,0 +1,20 @@
+FROM demoregistry.dataman-inc.com/library/centos7-base:20160907193907 
+MAINTAINER pro zpang@dataman-inc.com
+
+# Install grafana
+ENV PROMETHEUS_HOST prometheus
+ENV GRAFANA_PACKAGE grafana-3.1.1-1470047149.x86_64.rpm
+
+RUN yum install -y https://grafanarel.s3.amazonaws.com/builds/$GRAFANA_PACKAGE && yum clean all 
+
+RUN curl -L https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 > /usr/sbin/gosu && \
+    chmod +x /usr/sbin/gosu
+
+ADD grafana.ini /grafana.ini 
+COPY run_grafana.sh /run_grafana.sh
+COPY dataman.json /dataman.json
+
+COPY entrypoint.sh /
+RUN chmod +x /*.py /*.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
