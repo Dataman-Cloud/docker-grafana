@@ -2,6 +2,6 @@ FROM demoregistry.dataman-inc.com/library/centos7-base:20160907193907
 MAINTAINER pro zpang@dataman-inc.com
 
 # Install grafana
-RUN yum install https://grafanarel.s3.amazonaws.com/builds/grafana-3.1.1-1470047149.x86_64.rpm && yum clean all
+RUN yum install -y https://grafanarel.s3.amazonaws.com/builds/grafana-3.1.1-1470047149.x86_64.rpm && yum clean all
 
 ENTRYPOINT ["/usr/sbin/grafana-server"]
